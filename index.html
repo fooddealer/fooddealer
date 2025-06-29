@@ -6,22 +6,34 @@
   <title>Food Dealer</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    /* Osnovne postavke za telo stranice */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Reset and basic setup */
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
       background-color: #f4f4f9;
       color: #333;
     }
     
-    /* Header postavke */
+    /* Header */
     header {
-      background-color: #2c3e50;
+      background-color: black;
       color: white;
-      padding: 30px 20px;
+      padding: 35px 20px;
       text-align: center;
       position: relative;
+      flex-shrink: 0;
     }
     
     header h1 {
@@ -45,161 +57,64 @@
       padding: 5px 10px;
       cursor: pointer;
       z-index: 10;
+      transition: background-color 0.3s ease;
     }
     
     .language-switcher:hover {
       background-color: rgba(255, 255, 255, 0.3);
     }
 
-    /* Meni i njegovo pozicioniranje */
+    /* Menu image container */
     .menu {
-      padding: 20px;
-      text-align: center;
-    }
-    
-    .menu h2 {
-      font-size: 28px;
-      color: #e67e22;
-      margin-bottom: 20px;
-    }
-    
-    /* Flexbox za horizontalni raspored */
-    .menu-items {
+      flex: 1;
       display: flex;
-      justify-content: center;
-      gap: 15px;
-      flex-wrap: wrap; /* Omogućava prelazak u sledeći red ako nije dovoljno prostora */
-      margin-bottom: 20px;
+      padding: 0;
+      margin: 0;
     }
-    
-    /* Svaka stavka menija */
-    .item {
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+
+    .full-menu-img {
       width: 100%;
-      max-width: 300px;
-      text-align: center;
-      padding: 15px;
-      transition: transform 0.3s ease;
-      margin-bottom: 15px;
-    }
-    
-    /* Hover efekat za stavke */
-    .item:hover {
-      transform: translateY(-5px);
-    }
-    
-    /* Slike hrane */
-    .item-img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-    
-    .item-details {
-      padding-top: 10px;
-    }
-    
-    .item h3 {
-      font-size: 22px;
-      color: #333;
-      margin-bottom: 10px;
-    }
-    
-    .item p {
-      font-size: 16px;
-      color: #7f8c8d;
-      margin-bottom: 10px;
-    }
-    
-    .item span {
-      font-size: 18px;
-      color: #27ae60;
-      font-weight: bold;
+      height: 100%;
+      object-fit: fill;
       display: block;
-      margin-top: 5px;
     }
     
     /* Footer */
     footer {
-      background-color: #2c3e50;
+      background-color: black;
       color: white;
-      padding: 20px 10px;
+      padding: 25px 10px;
       text-align: center;
+      flex-shrink: 0;
     }
     
     footer a {
       color: #e67e22;
       text-decoration: none;
       margin: 0 10px;
+      transition: color 0.3s ease;
     }
     
     footer a:hover {
+      color: #d35400;
       text-decoration: underline;
     }
 
-    /* Floating Contact Button */
-    .floating-contact {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #e67e22;
-      color: white;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      cursor: pointer;
-      z-index: 100;
-      transition: all 0.3s ease;
-    }
-
-    .floating-contact:hover {
-      background-color: #d35400;
-      transform: scale(1.1);
-    }
-
-    .floating-contact i {
-      font-size: 24px;
-    }
-
-    .contact-popup {
-      position: fixed;
-      bottom: 90px;
-      right: 20px;
-      background-color: white;
-      border-radius: 10px;
-      padding: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      width: 250px;
+    /* Language toggle */
+    .hidden {
       display: none;
-      z-index: 99;
     }
 
-    .contact-popup a {
-      display: block;
-      color: #333;
-      text-decoration: none;
-      margin: 10px 0;
-      font-size: 16px;
+    .sr p {
+      padding: 5px;
     }
 
-    .contact-popup a i {
-      margin-right: 10px;
-      color: #e67e22;
-    }
-
-    .contact-popup.active {
-      display: block;
-    }
-
-    /* Responsivni dizajn */
+    /* Responsive design */
     @media (max-width: 768px) {
+      header {
+        padding: 25px 15px;
+      }
+      
       header h1 {
         font-size: 28px;
       }
@@ -207,20 +122,20 @@
       header p {
         font-size: 16px;
       }
-      
-      .menu-items {
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .item {
-        width: 90%;
-        max-width: none;
+
+      header img {
+        width: 200px !important;
       }
     }
 
-    .hidden {
-      display: none;
+    @media (max-width: 480px) {
+      header {
+        padding: 20px 10px;
+      }
+
+      header img {
+        width: 150px !important;
+      }
     }
   </style>
 </head>
@@ -235,118 +150,23 @@
   </header>
 
   <section class="menu">
-    <h2 class="sr">Meni</h2>
-    <h2 class="en hidden">Menu</h2>
-
-    <div class="menu-items">
-      <!-- Burger 1 -->
-      <div class="item">
-        <img src="images/photo1.jpg" alt="Burger 1" class="item-img">
-        <div class="item-details">
-          <h3>Burger 1</h3>
-          <p class="sr">Roštilj sa lukom i kajmakom</p>
-          <p class="en hidden">Grilled meat with onions and kaymak</p>
-          <span>6,00€</span>
-        </div>
-      </div>
-
-      <!-- Pizza Margarita -->
-      <div class="item">
-        <img src="images/photo2.jpg" alt="Pizza Margarita" class="item-img">
-        <div class="item-details">
-          <h3>Pizza Margarita</h3>
-          <p class="sr">Pelat, mocarela, bosiljak</p>
-          <p class="en hidden">Tomato sauce, mozzarella, basil</p>
-          <span>6,00€</span>
-        </div>
-      </div>
-
-      <!-- Palačinka -->
-      <div class="item">
-        <img src="images/photo3.jpg" alt="Palačinka" class="item-img">
-        <div class="item-details">
-          <h3 class="sr">Palačinka</h3>
-          <h3 class="en hidden">Crepe</h3>
-          <p class="sr">Slatka, slana i pohovana</p>
-          <p class="en hidden">Sweet, savory and fried</p>
-          <span>6,00€</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Drugi red sa Burger 2, Pizza 2 i Pasta -->
-    <div class="menu-items">
-      <div class="item">
-        <img src="images/photo1.jpg" alt="Burger 2" class="item-img">
-        <div class="item-details">
-          <h3>Burger 2</h3>
-          <p class="sr">Roštilj sa sirom i pomfritom</p>
-          <p class="en hidden">Grilled meat with cheese and french fries</p>
-          <span>7,00€</span>
-        </div>
-      </div>
-
-      <div class="item">
-        <img src="images/photo2.jpg" alt="Pizza 2" class="item-img">
-        <div class="item-details">
-          <h3>Pizza 2</h3>
-          <p class="sr">Četiri vrste sira</p>
-          <p class="en hidden">Four cheese</p>
-          <span>8,00€</span>
-        </div>
-      </div>
-
-      <div class="item">
-        <img src="images/photo3.jpg" alt="Pasta" class="item-img">
-        <div class="item-details">
-          <h3>Pasta</h3>
-          <p class="sr">Pasta sa paradajz sosom</p>
-          <p class="en hidden">Pasta with tomato sauce</p>
-          <span>5,50€</span>
-        </div>
-      </div>
-    </div>
+    <img src="images/1.png" alt="Full Menu" class="full-menu-img" />
   </section>
 
   <footer>
     <div class="sr">
       <p>Kontaktirajte nas:</p>
-      <a href="tel:+38267123456"><i class="fas fa-phone"></i> +382 67 123 456</a>
-      <a href="https://www.instagram.com/fooddealer" target="_blank"><i class="fab fa-instagram"></i> @fooddealer</a>
+      <a href="tel:+38269676422"><i class="fas fa-phone"></i> +382 69 676 422</a>
+      <a href="https://www.instagram.com/fooddealer.me" target="_blank"><i class="fab fa-instagram"></i> fooddealer.me</a>
     </div>
     <div class="en hidden">
       <p>Contact us:</p>
-      <a href="tel:+38267123456"><i class="fas fa-phone"></i> +382 67 123 456</a>
-      <a href="https://www.instagram.com/fooddealer" target="_blank"><i class="fab fa-instagram"></i> @fooddealer</a>
+      <a href="tel:+38269676422"><i class="fas fa-phone"></i> +382 69 676 422</a>
+      <a href="https://www.instagram.com/fooddealer.me" target="_blank"><i class="fab fa-instagram"></i> fooddealer.me</a>
     </div>
   </footer>
 
-  <!-- Floating Contact Button -->
-  <div class="floating-contact" onclick="toggleContactPopup()">
-    <i class="fas fa-utensils"></i>
-  </div>
-
-  <!-- Contact Popup -->
-  <div class="contact-popup" id="contactPopup">
-    <div class="sr">
-      <h4>Naruči odmah!</h4>
-      <a href="tel:+38267123456"><i class="fas fa-phone"></i> +382 67 123 456</a>
-      <a href="https://www.instagram.com/fooddealer" target="_blank"><i class="fab fa-instagram"></i> @fooddealer</a>
-    </div>
-    <div class="en hidden">
-      <h4>Order now!</h4>
-      <a href="tel:+38267123456"><i class="fas fa-phone"></i> +382 67 123 456</a>
-      <a href="https://www.instagram.com/fooddealer" target="_blank"><i class="fab fa-instagram"></i> @fooddealer</a>
-    </div>
-  </div>
-
   <script>
-    // Toggle Contact Popup
-    function toggleContactPopup() {
-      const popup = document.getElementById('contactPopup');
-      popup.classList.toggle('active');
-    }
-
     // Language Switcher
     function toggleLanguage() {
       const srElements = document.querySelectorAll('.sr');
@@ -366,20 +186,6 @@
       // Update html lang attribute
       document.documentElement.lang = currentLang.textContent.toLowerCase();
     }
-
-    // Close contact popup when clicking outside
-    document.addEventListener('click', function(event) {
-      const popup = document.getElementById('contactPopup');
-      const floatingBtn = document.querySelector('.floating-contact');
-      
-      if (popup.classList.contains('active') && 
-          event.target !== popup && 
-          !popup.contains(event.target) &&
-          event.target !== floatingBtn &&
-          !floatingBtn.contains(event.target)) {
-        popup.classList.remove('active');
-      }
-    });
   </script>
 </body>
 </html>
